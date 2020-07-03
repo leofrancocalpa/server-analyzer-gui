@@ -27,11 +27,45 @@ const state = {
     previousQueries: {
         items: [
             {
-                dns: "amazon.com",
-                data: {}
+                dns: "facebook.com",
+                data: {
+                    servers: [
+                        {
+                            address: "104.244.42.65",
+                            ssl_grade: "A+",
+                            country: "US",
+                            owner: "Twitter Inc."
+                        },
+                        {
+                            address: "104.244.42.1",
+                            ssl_grade: "A+",
+                            country: "US",
+                            owner: "Twitter Inc."
+                        },
+                        {
+                            address: "104.244.42.65",
+                            ssl_grade: "A+",
+                            country: "US",
+                            owner: "Twitter Inc."
+                        },
+                        {
+                            address: "104.244.42.1",
+                            ssl_grade: "A+",
+                            country: "US",
+                            owner: "Twitter Inc."
+                        }
+                    ],
+                    servers_changed: false,
+                    ssl_grade: "A",
+                    previous_ssl_grade: "A",
+                    logo: "https://static.xx.fbcdn.net/rsrc.php/yo/r/iRmz9lCMBD2.ico",
+                    title: "",
+                    is_down: false
+                }
             }
         ]
     }
+
 }
 
 // getters
@@ -45,15 +79,16 @@ const actions = {
     loadPreviousQueries: function (context) {
         return axios.get("/servers").then(response => {
             context.commit('SET_PREVIOUSQUERIES', response.data)
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log(error)
         })
     },
 
     loadInfoHostQueried: function (context, host) {
-        return axios.get("/servers/analyze?host="+host).then(response => {
+        return axios.get("/servers/analyze?host=" + host).then(response => {
             context.commit('SET_INFOHOSTQUERIED', response.data)
-        }).catch(function(error){
+            context.dispatch("loadPreviousQueries")
+        }).catch(function (error) {
             console.log(error)
         })
     }
@@ -62,11 +97,11 @@ const actions = {
 
 // mutations
 const mutations = {
-    
-    SET_INFOHOSTQUERIED(state, payload){
+
+    SET_INFOHOSTQUERIED(state, payload) {
         state.infoHostQueried = payload
     },
-    SET_PREVIOUSQUERIES(state, payload){
+    SET_PREVIOUSQUERIES(state, payload) {
         state.previousQueries = payload
     }
 
