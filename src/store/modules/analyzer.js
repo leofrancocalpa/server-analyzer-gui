@@ -77,7 +77,7 @@ const getters = {
 // actions
 const actions = {
     loadPreviousQueries: function (context) {
-        return axios.get("/servers").then(response => {
+        return axios.get("/api/v1/servers").then(response => {
             context.commit('SET_PREVIOUSQUERIES', response.data)
         }).catch(function (error) {
             console.log(error)
@@ -85,7 +85,7 @@ const actions = {
     },
 
     loadInfoHostQueried: function (context, host) {
-        return axios.get("/servers/analyze?host=" + host).then(response => {
+        return axios.get("/api/v1/servers/analyze?host=" + host).then(response => {
             context.commit('SET_INFOHOSTQUERIED', response.data)
             context.dispatch("loadPreviousQueries")
         }).catch(function (error) {
