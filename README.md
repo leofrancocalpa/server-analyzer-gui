@@ -1,3 +1,4 @@
+last update in [mods](https://github.com/leofrancocalpa/server-analyzer-gui/tree/mods) branch
 # server-analyzer-gui
 
 > server analyzer
